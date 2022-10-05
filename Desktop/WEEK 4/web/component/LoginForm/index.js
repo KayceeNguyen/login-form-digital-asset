@@ -6,7 +6,7 @@ export default function LoginForm({
 }) {
 
     var c = "blue";
-  var button_next="click me start";
+  var button_next="click me to start";
 
   if(loginState === "before") {
     c = "blue"
