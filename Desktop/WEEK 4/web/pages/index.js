@@ -1,67 +1,56 @@
-import { Button } from "semantic-ui-react"
-import { useRouter} from "next/router"
-import { useState} from "react"
-// import { serialize } from 'v8'
-import { resolve } from 'path'
-import LoginForm from '../component/LoginForm'
+import { Button, Loader } from 'semantic-ui-react';
+import LoginForm from '../component/LoginForm';
+
+
+import { useRouter } from'next/router';
+import { useState } from 'react';
+
 
 export default function Home() {
-  //before, during and after
 
-const [loginState, setLoginState] = useState("before")
-var c = "blue";
+  const r = useRouter();
 
-
-const r = useRouter();
-var button_next = "click me to start"
+  // before, during, after
+  const [loginState, setLoginState] = useState("before");
+  
 
 
 
-if(loginState === "before") {
-  c = "blue";
-}
+  // const HandleButton = () => {
+  //     if(loginState === "before") {
+  //       setLoginState("during")
+  //     }
+  //     if(loginState === "during") {
+  //       setLoginState("after")
+  //     }
+  //     if(loginState === "after") {
+  //       r.push("/dashboard")
+  //     }
+  // }
 
-if(loginState === "during") {
-  c = "green";
-  button_next = "loading";
-}
 
-if(loginState === "after") {
-  c = "grey"
-  button_next = "logged in"
-}
 
-const HandleButton = () => {
-  if(loginState === "before") {
+  const Login = async () => {
     setLoginState("during");
-  }
 
-  if(loginState === "during") {
-    setLoginState("after")
-  }
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    setLoginState("after");
 
-  if(loginState === "after") {
+
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
     r.push("/dashboard");
   }
 
-}
-
-const Login = async () => {
-  setLoginState("during")
-  await new Promise(resolve => setTimeout(resolve, 2000))
-
-  setLoginState("after")
-  await new Promise(resolve => setTimeout(resolve, 2000))
-
-  r.push("/dashboard");
-
-}
-
-return (
-  <div >
-    <Button color={c} onClick={()=>HandleButton()}>{button_next}</Button>
-  </div>
-)
-
-
+  
+  return (
+    <div >
+      {/* <Button color={c} onClick={()=>Login()}>{button_next}
+        {loginState ==="during" && <Loader active/>}
+      </Button> */}
+      <LoginForm loginState={loginState}
+      onLoginClick={()=>Login()}
+      />
+    </div>
+  )
 }
