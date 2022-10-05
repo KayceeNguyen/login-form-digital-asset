@@ -1,4 +1,4 @@
-import { Button, Loader } from "semantic-ui-react"
+import { Button } from "semantic-ui-react"
 import { useRouter} from "next/router"
 import { useState} from "react"
 // import { serialize } from 'v8'
@@ -9,38 +9,42 @@ export default function Home() {
   //before, during and after
 
 const [loginState, setLoginState] = useState("before")
-// var c = "blue";
+var c = "blue";
+
+
 const r = useRouter();
-// var button_next = "click me to start"
+var button_next = "click me to start"
 
-// if(loginState === "before") {
-//   c = "blue";
-// }
 
-// if(loginState === "during") {
-//   c = "green";
-//   button_next = "loading";
-// }
 
-// if(loginState === "after") {
-//   c = "grey"
-//   button_next = "logged in"
-// }
+if(loginState === "before") {
+  c = "blue";
+}
 
-// const HandleButton = () => {
-//   if(loginState === "before") {
-//     setLoginState("during");
-//   }
+if(loginState === "during") {
+  c = "green";
+  button_next = "loading";
+}
 
-//   if(loginState === "during") {
-//     setLoginState("after")
-//   }
+if(loginState === "after") {
+  c = "grey"
+  button_next = "logged in"
+}
 
-//   if(loginState === "after") {
-//     r.push("/dashboard");
-//   }
+const HandleButton = () => {
+  if(loginState === "before") {
+    setLoginState("during");
+  }
 
-// }
+  if(loginState === "during") {
+    setLoginState("after")
+  }
+
+  if(loginState === "after") {
+    r.push("/dashboard");
+  }
+
+}
 
 const Login = async () => {
   setLoginState("during")
@@ -53,13 +57,11 @@ const Login = async () => {
 
 }
 
+return (
+  <div >
+    <Button color={c} onClick={()=>HandleButton()}>{button_next}</Button>
+  </div>
+)
 
 
-  return (
-    <div>
-      <LoginForm
-      loginState={loginState}
-      onLoginClick={()=>Login()}/>
-    </div>
-  )
 }
